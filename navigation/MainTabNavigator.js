@@ -1,6 +1,6 @@
 import React from 'react';
 import { bool } from 'prop-types';
-import { Platform, View, Text } from 'react-native';
+import { Platform } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
@@ -12,12 +12,13 @@ import SettingsScreen from '../screens/SettingsScreen';
 
 export default TabNavigator(
   {
-    Home: {
-      screen: HomeScreen,
-    },
     Graph: {
       screen: GraphScreen,
     },
+    Home: {
+      screen: HomeScreen,
+    },
+
     Settings: {
       screen: SettingsScreen,
     },
@@ -80,6 +81,6 @@ export default TabNavigator(
   },
 );
 
-TabNavigator.PropTypes = {
+TabNavigator.propTypes = {
   focused: bool,
 };

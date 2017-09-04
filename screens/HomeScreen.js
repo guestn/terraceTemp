@@ -13,7 +13,6 @@ import TempHumidityView from '../components/TempHumidityView';
 const { height, width } = Dimensions.get('window');
 
 export default class HomeScreen extends Component {
-
   static propTypes = {
     screenProps: any,
   }

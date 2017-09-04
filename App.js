@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
 import { bool } from 'prop-types';
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import RootNavigation from './navigation/RootNavigation';
 import { Asset, Font } from 'expo';
+import { EvilIcons } from '@expo/vector-icons';
+import RootNavigation from './navigation/RootNavigation';
 
-export default class App extends Component {
+import { Provider, connect } from 'react-firebase'
+import firebase, { initializeApp } from 'firebase';
+
+const firebaseApp = null;
+if (!firebase.apps.length) {
+  firebaseApp = initializeApp({
+    apiKey: "AIzaSyDdTmZPfamocJYLs3ce7tnHA_12niJBfCk",
+    authDomain: "terracetemp2.firebaseapp.com",
+    databaseURL: "https://terracetemp2.firebaseio.com",
+    projectId: "terracetemp2",
+    storageBucket: "terracetemp2.appspot.com",
+    messagingSenderId: "607134304579"
+  })
+}
+
+
+class App extends Component {
   static propTypes = {
     skipLoadingScreen: bool,
   }
@@ -16,7 +32,6 @@ export default class App extends Component {
       assetsAreLoaded: false,
     };
   }
-
 
   componentWillMount() {
     this.loadAssetsAsync();
@@ -30,7 +45,7 @@ export default class App extends Component {
           require('./assets/images/robot-prod.png'),
         ]),
         Font.loadAsync([
-          Ionicons.font,
+          EvilIcons.font,
           { 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf') },
         ]),
       ]);
@@ -50,15 +65,24 @@ export default class App extends Component {
       return <View><Text>Loading...</Text></View>;
     }
     return (
-      <View style={s.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        {Platform.OS === 'android' &&
-          <View style={s.statusBarUnderlay} />}
-        <RootNavigation />
-      </View>
+      <Provider firebaseApp={firebaseApp}>
+        <View style={s.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          {Platform.OS === 'android' &&
+            <View style={s.statusBarUnderlay} />}
+          <RootNavigation />
+        </View>
+      </Provider>
     );
   }
 }
+
+const mapFirebaseToProps = (props, ref) => ({
+  values: 'dataset2'
+})
+
+export default connect(mapFirebaseToProps)(App)
+
 
 const s = StyleSheet.create({
   container: {

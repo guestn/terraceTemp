@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { func, string } from 'prop-types';
 import moment from 'moment-timezone';
 import {
   ActivityIndicator,
@@ -12,9 +12,10 @@ import { MonoText } from '../components/StyledText';
 const token = 'd1d253a2a98001d4df65eee7d919e0d9149a2ae7';
 const URL = `https://api.spark.io/v1/devices/53ff71066667574808382467/data?access_token=${token}`;
 
-export default class TempHumidityView extends React.Component {
+export default class TempHumidityView extends Component {
   static propTypes = {
-    units: PropTypes.string
+    units: string,
+    temp: func,
   }
 
   constructor(props) {
@@ -30,17 +31,18 @@ export default class TempHumidityView extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchData()
+    this.fetchData();
   }
 
   fetchData = () => {
-    console.log('fetching')
-    this.setState({ loading: true })
+    console.log('fetching');
+    this.setState({ loading: true });
     fetch(URL)
       .then((response) => {
         if (response.ok) {
           return response.json();
         }
+        return false;
       })
       .then((responseData) => {
         console.log(responseData);
@@ -61,12 +63,9 @@ export default class TempHumidityView extends React.Component {
           loading: false,
         });
       })
-      .done();
   }
 
-  convertCtoF = (celcius) => {
-    return (celcius * 9 / 5) + 32;
-  }
+  convertCtoF = celcius => (celcius * 9 / 5) + 32;
 
   displayedTime = (time) => {
     if (moment(time).isBefore(moment())) {
@@ -86,7 +85,8 @@ export default class TempHumidityView extends React.Component {
           <MonoText style={s.tempText}>{ parseInt(humidity, 0) }%</MonoText>
           <MonoText >{ this.displayedTime(lastHeard) }</MonoText>
 
-          <ActivityIndicator animating={loading}/>
+          <ActivityIndicator animating={loading} />
+
         </View>
         { (error) ? (
           <View style={s.errorView}>
@@ -99,7 +99,7 @@ export default class TempHumidityView extends React.Component {
           </TouchableOpacity>
         </View>
       </View>
-    )
+    );
   }
 }
 
