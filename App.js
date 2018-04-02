@@ -3,25 +3,25 @@ import { bool } from 'prop-types';
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
 import { Asset, Font } from 'expo';
 import { EvilIcons } from '@expo/vector-icons';
+import { Provider } from 'react-firebase';
+import firebase, { initializeApp } from 'firebase';
 import RootNavigation from './navigation/RootNavigation';
 
-import { Provider, connect } from 'react-firebase'
-import firebase, { initializeApp } from 'firebase';
 
-const firebaseApp = null;
+let firebaseApp = null;
 if (!firebase.apps.length) {
   firebaseApp = initializeApp({
-    apiKey: "AIzaSyDdTmZPfamocJYLs3ce7tnHA_12niJBfCk",
-    authDomain: "terracetemp2.firebaseapp.com",
-    databaseURL: "https://terracetemp2.firebaseio.com",
-    projectId: "terracetemp2",
-    storageBucket: "terracetemp2.appspot.com",
-    messagingSenderId: "607134304579"
-  })
+    apiKey: 'AIzaSyDdTmZPfamocJYLs3ce7tnHA_12niJBfCk',
+    authDomain: 'terracetemp2.firebaseapp.com',
+    databaseURL: 'https://terracetemp2.firebaseio.com',
+    projectId: 'terracetemp2',
+    storageBucket: 'terracetemp2.appspot.com',
+    messagingSenderId: '607134304579',
+  });
 }
 
 
-class App extends Component {
+export default class App extends Component {
   static propTypes = {
     skipLoadingScreen: bool,
   }
@@ -76,13 +76,6 @@ class App extends Component {
     );
   }
 }
-
-const mapFirebaseToProps = (props, ref) => ({
-  values: 'dataset2'
-})
-
-export default connect(mapFirebaseToProps)(App)
-
 
 const s = StyleSheet.create({
   container: {

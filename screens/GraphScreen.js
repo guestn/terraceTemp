@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { object } from 'prop-types';
-
-
 import {
   StyleSheet,
   View,
@@ -12,7 +10,7 @@ import { MonoText } from '../components/StyledText';
 import Graph from '../components/Graph';
 
 
-class GraphScreen extends React.Component {
+class GraphScreen extends Component {
   static propTypes = {
     values: object,
   }
@@ -58,13 +56,13 @@ const mapFirebaseToProps = () => ({
   values: 'dataset2',
 });
 
-export default connect(mapFirebaseToProps)(GraphScreen);
-
 const s = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 2,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+export default connect(mapFirebaseToProps)(GraphScreen);

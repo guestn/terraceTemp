@@ -62,7 +62,7 @@ export default class TempHumidityView extends Component {
           error: 'network error',
           loading: false,
         });
-      })
+      });
   }
 
   convertCtoF = celcius => (celcius * 9 / 5) + 32;
